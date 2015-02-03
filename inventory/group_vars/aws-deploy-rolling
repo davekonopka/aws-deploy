@@ -1,0 +1,6 @@
+lb_name: davek-app
+lc_name: davek-app-{{ lc_suffix }}
+load_balancers: 
+- davek-app
+asg_group_name: davek-app
+batch_size: 1

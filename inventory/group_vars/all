@@ -1,0 +1,21 @@
+app_name: davek-app
+instance_type: m1.micro
+region: us-east-1
+lc_security_groups:
+- "{{ app_security_group.group_id }}"
+- "{{ admin_access_group.group_id }}"
+asg_subnets:
+- "{{ vpc.subnets[0].id }}"
+asg_desired_capacity: 2
+asg_min_size: 2
+asg_max_size: 2
+vpc_subnets:
+  - cidr: 10.0.1.0/24
+    resource_tags: { "Name":"{{ app_name }}-1" }
+    az: us-east-1b
+route_tables:
+  - subnets:
+      - 10.0.1.0/24
+    routes:
+      - dest: 0.0.0.0/0
+        gw: igw
