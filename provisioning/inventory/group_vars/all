@@ -1,11 +1,12 @@
 app_name: davek-app
-instance_type: m1.micro
+instance_type: t2.micro
 region: us-east-1
 lc_security_groups:
 - "{{ app_security_group.group_id }}"
 - "{{ admin_access_group.group_id }}"
 asg_subnets:
 - "{{ vpc.subnets[0].id }}"
+key_name: work-laptop
 asg_desired_capacity: 2
 asg_min_size: 2
 asg_max_size: 2
@@ -19,3 +20,5 @@ route_tables:
     routes:
       - dest: 0.0.0.0/0
         gw: igw
+availability_zones:
+- us-east-1b

@@ -7,6 +7,12 @@
   notify:
     - restart nginx
 
+- name: ensure nginx content directory is created
+  file: path=/usr/share/mysite state=directory
+
+- name: copy index.html
+  template: src=index.html.j2 dest=/usr/share/mysite/index.html
+  
 - name: add nginx vhost
   action: template src=nginx-host.j2 dest=/etc/nginx/sites-available/my-site
   notify:
@@ -16,3 +22,6 @@
   action: file src=/etc/nginx/sites-available/my-site dest=/etc/nginx/sites-enabled/my-site state=link
   notify:
     - restart nginx
+    
+    
+    

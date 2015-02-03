@@ -1,0 +1,10 @@
+
+## Provisioning Setup
+
+* PhantomJS
+* pip install -r requirements.txt
+* bundle install
+
+## Open Issues
+
+* Ruby/Python split brain.
