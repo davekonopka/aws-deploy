@@ -1,0 +1,5 @@
+---
+- hosts: aws-deploy-rolling
+  gather_facts: False
+  roles:
+  - aws_core
