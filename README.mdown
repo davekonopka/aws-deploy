@@ -6,14 +6,7 @@ Locally, a Vagrant vm definition provisions a development system. The production
 
 The app's host system is Ubuntu Trusty based. System configuration and AWS provisioning and deployment are managed via Ansible.
 
-## Local Development
-
-Local development is managed via Vagrant's Ansible provisioner.
-
-* `vagrant up`
-    * provisions a fully working local vm on ip address 192.168.55.2.
-
-### Dev Requirements
+## Requirements
 
 * Ruby >= 2.0
 * Python 2.7.9
@@ -21,6 +14,13 @@ Local development is managed via Vagrant's Ansible provisioner.
 * [PhantomJS](http://phantomjs.org/) (via HomeBrew: `brew install phantomjs`)
 * `pip install -r requirements.txt`
 * `bundle install`
+
+## Local Development
+
+Local development is managed via Vagrant's Ansible provisioner.
+
+* `vagrant up`
+    * provisions a fully working local vm on ip address 192.168.55.2.
 
 ### Tests
 
