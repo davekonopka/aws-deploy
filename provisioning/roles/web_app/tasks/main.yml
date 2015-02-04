@@ -1,0 +1,7 @@
+---
+  - name: ensure content directory is created
+    file: path=/usr/share/mysite state=directory
+
+  - name: copy index.html
+    template: src=index.html.j2 dest=/usr/share/mysite/index.html
+    

@@ -3,4 +3,5 @@
   gather_facts: False
   sudo: True
   roles:
+  - web_app
   - nginx 
