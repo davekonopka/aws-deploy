@@ -1,10 +1,59 @@
+# Simple web app AWS deployment via Ansible
 
-## Provisioning Setup
+This project demonstrates one approach to deploying a web app to AWS. For the sake of simplicity, the web app is a single HTML page served by nginx. 
 
-* PhantomJS
-* pip install -r requirements.txt
-* bundle install
+Locally, a Vagrant vm definition provisions a development system. The production environment is an AWS VPC with an autoscaling group setup behind an Elastic Load Balancer. Deploys are accomplished by building an AMI with the current app state and associating the AMI with an autoscaling launch configuration. The autoscaling group handles creating and launching or replacing any existing instances one by one with new instances of the updated AMI.
 
-## Open Issues
+The app's host system is Ubuntu Trusty based. System configuration and AWS provisioning and deployment are managed via Ansible.
 
-* Ruby/Python split brain.
+## Local Development
+
+Local development is managed via Vagrant's Ansible provisioner.
+
+* `vagrant up`
+    * provisions a fully working local vm on ip address 192.168.55.2.
+
+### Dev Requirements
+
+* Ruby >= 2.0
+* Python 2.7.9
+* [Vagrant](https://www.vagrantup.com/) and [Virtualbox](https://www.virtualbox.org/)
+* [PhantomJS](http://phantomjs.org/) (via HomeBrew: `brew install phantomjs`)
+* `pip install -r requirements.txt`
+* `bundle install`
+
+### Tests
+
+Limited Cucumber feature tests are included runnable via:
+
+* `cucumber`
+
+## AWS Deployment
+
+Deploying the current build is accomplished with two commands. 
+
+* First, generate a new AMI from the current Ansible build:
+    * `AWS_ACCESS_KEY=... AWS_SECRET_KEY=... ansible-playbook bake_ami.yml`
+* Next, deploy the current AMI to a new autoscaling launch configuration. This will either set up a new stack or replace any existing instances one by one with the new build.
+    * `AWS_ACCESS_KEY=... AWS_SECRET_KEY=... ansible-playbook deploy_aws.yml`
+
+## Ansible resources
+
+* `./local_dev.yml` playbook responsible for local dev environment.
+* `./bake_ami.yml` playbook responsible for creating an AWS AMI from the current app build. Saves ami metadata to `/vars/current_ami.yml` for use by deploy playbook.
+* `./deploy_aws.yml` playbook responsible creating a launch config for the AMI described in `/vars/current_ami.yml`
+* `./roles/nginx/` role responsible for configuring nginx on app host.
+* `./roles/web_app/` role responsible for deploying web app code.
+* `./roles/aws_core/` role responsible for basic AWS infrastructure setup.
+
+## Known Issues
+
+* Initial Ansible provisioning of the AWS autoscaling group is failing with an error around tags. However, the group is created as expected and subsequent provisions succeed. I'm still investigating this as a potential bug or my own misunderstanding.
+
+## Credit
+
+Assembled with plenty of sample code and guidance from the following:
+
+* [Immutable Systems and Ansible - Building and Deploying AMIs to AutoScaling Groups](http://www.ansible.com/blog/immutable-systems) and [immutabilish-deploys repo](https://github.com/ansible/immutablish-deploys) by James Martin 
+* [Using Vagrant and Ansible](http://docs.ansible.com/guide_vagrant.html)
+* [Ansible AWS Docs](http://docs.ansible.com/guide_aws.html)
