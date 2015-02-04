@@ -1,5 +1,5 @@
 Given(/^development vm is up and provisioned$/) do
-  `vagrant status` || `vagrant up`
+  `vagrant up`
 end
 
 When(/^I browse to vm ip (\d+\.\d+\.\d+\.\d+)$/) do |vm_ip|
