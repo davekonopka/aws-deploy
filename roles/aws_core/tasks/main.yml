@@ -48,6 +48,7 @@
     state: present
     subnets: "{{ asg_subnets }}"
     connection_draining_timeout: 60
+    security_group_ids: "{{ app_security_group.group_id }}"
     listeners:
       - protocol: http
         load_balancer_port: 80
