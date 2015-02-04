@@ -61,4 +61,4 @@
       content: |
              image_id: {{ amioutput.image_id }}
              lc_suffix: {{ ansible_date_time.epoch }}
-      dest: vars/settings.yml
+      dest: vars/ami_current.yml

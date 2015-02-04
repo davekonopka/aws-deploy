@@ -6,7 +6,7 @@
     tmp_min_size: "{{ asg_min_size + batch_size }}"
     tmp_max_size: "{{ asg_max_size + batch_size }}"
   vars_files:
-  - vars/settings.yml
+  - vars/ami_current.yml
   roles:
   - aws_core
   tasks:
