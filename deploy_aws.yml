@@ -38,8 +38,8 @@
       region: "{{ region }}"
       replace_all_instances: yes
       vpc_zone_identifier: "{{ asg_subnets | join(',') }}"
-    until: asg_result.viable_instances|int >= asg_desired_capacity|int
+    register: asg_result
+    until: asg_result
     delay: 10
     retries: 120
-    register: asg_result
     tags: autoscale_group
