@@ -33,9 +33,9 @@ Limited Cucumber feature tests are included runnable via:
 Deploying the current build is accomplished with two commands. 
 
 * First, generate a new AMI from the current Ansible build:
-    * `AWS_ACCESS_KEY=... AWS_SECRET_KEY=... ansible-playbook bake_ami.yml`
+    * `AWS_ACCESS_KEY=... AWS_SECRET_KEY=... ansible-playbook bake_ami.yml -e "key_name=*valid key name*"`
 * Next, deploy the current AMI to a new autoscaling launch configuration. This will either set up a new stack or replace any existing instances one by one with the new build.
-    * `AWS_ACCESS_KEY=... AWS_SECRET_KEY=... ansible-playbook deploy_aws.yml`
+    * `AWS_ACCESS_KEY=... AWS_SECRET_KEY=... ansible-playbook deploy_aws.yml -e "key_name=*valid key name*"`
 
 ## Ansible resources
 

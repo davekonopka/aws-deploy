@@ -5,16 +5,16 @@ region: us-east-1
 lc_security_groups:
 - "{{ app_security_group.group_id }}"
 - "{{ admin_access_group.group_id }}"
-lc_name: davek-app-{{ lc_suffix }}
+lc_name: "{{ app_name }}-{{ lc_suffix }}"
 batch_size: 1
 
 asg_subnets:
 - "{{ vpc.subnets[0].id }}"
-key_name: work-laptop
+key_name: "{{ key_name }}"
 asg_desired_capacity: 2
 asg_min_size: 2
 asg_max_size: 2
-asg_group_name: davek-app
+asg_group_name: "{{ app_name }}"
 
 vpc_subnets:
   - cidr: 10.0.1.0/24
