@@ -1,4 +1,7 @@
 ---
+# Create a launch config and app autoscaling group
+# New launch config is created anytime a new ami id shows up in vars/ami_current.yml
+
 - hosts: aws-deploy-rolling
   gather_facts: False
   vars:
@@ -21,7 +24,7 @@
       assign_public_ip: yes
     tags: launch_config
 
-  - name: create autoscale groups
+  - name: create autoscale group or assign new launch config
     ec2_asg:
       name: "{{ asg_group_name }}"
       health_check_period: 60

@@ -1,5 +1,9 @@
 ---
+# Build a new ami for deployment
+# On success, output ami details to vars/ami_current.yml for use by deployment playbook
+
 - hosts: aws-bake-ami
+  gather_facts: False
   roles:
   - aws_core
   tasks:
@@ -45,7 +49,7 @@
       region: "{{ region }}"
       state: present
       description: This was provisioned {{ ansible_date_time.iso8601 }}
-      name: {{ app_name }}-{{ ansible_date_time.epoch }}
+      name: "{{ app_name }}-{{ ansible_date_time.epoch }}"
       wait: yes
     register: amioutput
 
