@@ -1,7 +1,7 @@
 ---
-# tasks file for asg
+# tasks file for aws_deploy
 
-- name: create launch config
+- name: create new launch config
   ec2_lc:
     name: "{{ lc_name }}"
     image_id: "{{ image_id }}"
@@ -12,7 +12,7 @@
     assign_public_ip: yes
   tags: launch_config
 
-- name: create autoscale groups
+- name: create autoscale group or assign new launch config
   ec2_asg:
     name: "{{ asg_group_name }}"
     health_check_period: 60

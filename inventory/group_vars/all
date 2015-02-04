@@ -1,15 +1,21 @@
-app_name: davek-app
+app_name: davek-web-app
 instance_type: t2.micro
 region: us-east-1
+
 lc_security_groups:
 - "{{ app_security_group.group_id }}"
 - "{{ admin_access_group.group_id }}"
+lc_name: davek-app-{{ lc_suffix }}
+batch_size: 1
+
 asg_subnets:
 - "{{ vpc.subnets[0].id }}"
 key_name: work-laptop
 asg_desired_capacity: 2
 asg_min_size: 2
 asg_max_size: 2
+asg_group_name: davek-app
+
 vpc_subnets:
   - cidr: 10.0.1.0/24
     resource_tags: { "Name":"{{ app_name }}-1" }
@@ -22,3 +28,10 @@ route_tables:
         gw: igw
 availability_zones:
 - us-east-1b
+
+lb_name: "{{ app_name }}"
+load_balancers: 
+- "{{ lb_name }}"
+
+ami_base_image: ami-86562dee
+ami_group_id: "{{ admin_access_group.group_id }}"

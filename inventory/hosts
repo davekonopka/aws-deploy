@@ -1,2 +1,5 @@
 [aws-deploy-rolling]
 127.0.0.1 ansible_python_interpreter=/usr/local/bin/python ansible_connection=local
+
+[aws-bake-ami]
+127.0.0.1 ansible_python_interpreter=/usr/local/bin/python ansible_connection=local

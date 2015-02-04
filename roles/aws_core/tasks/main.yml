@@ -1,5 +1,6 @@
 ---
 # tasks file for aws_core
+
 - name: create vpc
   ec2_vpc:
     state: present
@@ -12,10 +13,10 @@
     wait: yes
   register: vpc
 
-- name: create admin access 
+- name: create admin access security group
   ec2_group:
     name: admin_access
-    description: SSH access for admins and tower
+    description: SSH access
     region: "{{ region }}"
     vpc_id: "{{ vpc.vpc_id }}"
     rules:
@@ -29,7 +30,7 @@
 - name: create app security group
   ec2_group:
     name: "{{ app_name }}"
-    description: "{{ app_name }} security group"
+    description: "{{ app_name }} web access"
     region: "{{ region }}"
     rules:
       - proto: tcp

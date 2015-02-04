@@ -1,4 +1,5 @@
-- hosts: aws-deploy-rolling
+---
+- hosts: aws-bake-ami
   roles:
   - aws_core
   tasks:
@@ -7,10 +8,10 @@
       assign_public_ip: yes
       region: "{{ region }}"
       key_name: "{{ key_name }}"
-      group_id: "{{ group_id }}"
+      group_id: "{{ ami_group_id }}"
       instance_type: t2.micro
       vpc_subnet_id: "{{ vpc.subnets[0].id }}"
-      image: "{{ base_image }}"
+      image: "{{ ami_base_image }}"
       wait: yes
       wait_timeout: 500
       exact_count: 1
@@ -31,6 +32,7 @@
   remote_user: ubuntu
   sudo: True
   roles:
+    - web_app
     - nginx
 
 - hosts: aws-deploy-rolling
@@ -60,4 +62,3 @@
              image_id: {{ amioutput.image_id }}
              lc_suffix: {{ ansible_date_time.epoch }}
       dest: vars/settings.yml
-    when: deploy is defined and deploy|bool == True
