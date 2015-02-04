@@ -45,7 +45,7 @@
       region: "{{ region }}"
       state: present
       description: This was provisioned {{ ansible_date_time.iso8601 }}
-      name: myappami-{{ ansible_date_time.epoch }}
+      name: {{ app_name }}-{{ ansible_date_time.epoch }}
       wait: yes
     register: amioutput
 
